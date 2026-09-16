@@ -24,7 +24,7 @@
    Candidate Background`），不是枚举名；它除了改背景色，还会连带把高亮候选的**文字色**
    改成 accent 的对比色。
 
-## 跟随系统强调色
+## 早期方案（已放弃）
 
 ```bash
 ./accent-watch.sh          # 常驻：inotify 事件式监听，KDE 强调色一变就重新生成并推送
@@ -36,6 +36,24 @@ DRY_RUN=1 ./accent-watch.sh  # 只改仓库里的文件，不拷贝、不推送�
 但那走的是**纯色**路径，高亮块会退化成直角大矩形。要保住圆角就得用图片，而图片的颜色是死的，
 所以由脚本在 KDE 的 `~/.config/kdeglobals` 的 `AccentColor` 变化时重新生成图片。
 没装 inotify-tools 时脚本会自己退回 3 秒轮询。
+
+## 高亮色
+
+当前是**固定的绿 `#31a870`**（取自同作者 mellow-wechat 那套配色的高亮色），直接写在 `theme/highlight.svg` 里。
+换色改这个 svg 再 `./build.sh` 即可。
+
+仓库里还留着 `accent-watch.sh`（跟随 KDE 强调色的方案，**当前未启用**）：
+它盯 `~/.config/kdeglobals` 的 `AccentColor`，一变就重新生成高亮并推给 fcitx5。
+之所以不直接用，是因为 fcitx5 自身的 `[AccentColorField]` + `UseAccentColor` 走纯色路径，
+高亮块会退化成直角大矩形，丢圆角。要用的话：
+
+```bash
+./accent-watch.sh          # 常驻（inotify 事件式）
+./accent-watch.sh --once   # 同步一次 —— 注意它会把高亮改回系统强调色
+DRY_RUN=1 ./accent-watch.sh  # 只改仓库文件，不推送
+```
+
+## 早期方案（已放弃）
 
 ## 安装
 
