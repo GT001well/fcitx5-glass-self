@@ -22,6 +22,7 @@
   - [高亮色](#高亮色)
 - [目录结构](#目录结构)
 - [已知限制](#已知限制)
+- [相关项目](#相关项目)
 - [实测记录](#实测记录)
 - [致谢](#致谢)
 - [许可证](#许可证)
@@ -99,6 +100,17 @@ install.sh            安装与推送
   本主题选择保留圆角。
 - **模糊依赖 KWin。** 合成器未实现 `ext_background_effect_manager_v1` 时模糊不生效，
   主题的其余部分不受影响。
+
+## 相关项目
+
+本主题只负责候选窗的外观。若你使用 Rime（中州韵）方案，搭配**万象拼音**的语法模型可以改善长句
+候选的排序（不启用时输入法照常工作，只是长句会更依赖词频）：
+
+- [amzxyz/rime-wanxiang](https://github.com/amzxyz/rime-wanxiang)：输入方案本体
+- [amzxyz/RIME-LMDG](https://github.com/amzxyz/RIME-LMDG)：语法模型与词库数据。
+  LTS 版 `wanxiang-lts-zh-hans.gram` 约 420 MB，请在该项目的 Releases 页面下载
+
+模型文件体积过大，不适合随本仓库分发，因此仅指向上游；上游保持更新，比固化一份副本更可靠。
 
 ## 实测记录
 

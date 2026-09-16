@@ -25,6 +25,7 @@ attribution and license are listed at the end of this file.
   - [Highlight color](#highlight-color)
 - [Layout](#layout)
 - [Known limitations](#known-limitations)
+- [Related projects](#related-projects)
 - [Field notes](#field-notes)
 - [Credits](#credits)
 - [License](#license)
@@ -108,6 +109,21 @@ install.sh            install and push
 - **Blur requires KWin.** On compositors that do not implement
   `ext_background_effect_manager_v1` the blur simply does not appear; the rest of the
   theme is unaffected.
+
+## Related projects
+
+This theme only covers the appearance of the candidate window. If you use a Rime schema,
+pairing it with the **Wanxiang** grammar model improves the ranking of long-sentence
+candidates (without it the input method still works; long sentences simply rely on word
+frequency):
+
+- [amzxyz/rime-wanxiang](https://github.com/amzxyz/rime-wanxiang): the input scheme
+- [amzxyz/RIME-LMDG](https://github.com/amzxyz/RIME-LMDG): grammar model and dictionary
+  data. The LTS model `wanxiang-lts-zh-hans.gram` is about 420 MB; download it from that
+  project's Releases page
+
+The model file is too large to distribute with this repository, so the links above point
+to the upstream sources, which stay up to date.
 
 ## Field notes
 
