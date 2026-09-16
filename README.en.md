@@ -7,6 +7,10 @@ An Fcitx5 candidate window theme, derived from
 (`mellow-graphite-dark`). The goal is a **translucent glass look with KWin background
 blur and rounded corners**.
 
+This is a **personal configuration**: opacity, blur region and highlight color are tuned
+to personal preference. It is published for reference or direct reuse. The upstream
+attribution and license are listed at the end of this file.
+
 - Theme directory name: `mellow-alpha`
 - Display name: `Mellow Graphite alpha`
 

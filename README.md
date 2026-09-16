@@ -5,6 +5,9 @@
 一个 Fcitx5 候选窗主题，基于 [sanweiya/fcitx5-mellow-themes](https://github.com/sanweiya/fcitx5-mellow-themes)
 的 `mellow-graphite-dark` 改造，目标是**半透明玻璃质感 + KWin 背景模糊 + 圆角形状**。
 
+这是一份**个人自用**的主题配置：透明度、模糊范围与高亮色均按个人习惯调整，公开出来供参考或直接取用。
+上游出处与许可证见文末。
+
 - 主题目录名：`mellow-alpha`
 - 显示名：`Mellow Graphite alpha`
 
