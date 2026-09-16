@@ -112,6 +112,27 @@ install.sh            安装与推送
 
 模型文件体积过大，不适合随本仓库分发，因此仅指向上游；上游保持更新，比固化一份副本更可靠。
 
+安装要点（实测于 fcitx5 5.1.22）：
+
+```bash
+# 1. 下载到 Rime 用户目录（上游 release 页给出 sha256，建议校验）
+cd ~/.local/share/fcitx5/rime
+curl -LO https://github.com/amzxyz/RIME-LMDG/releases/download/LTS/wanxiang-lts-zh-hans.gram
+sha256sum wanxiang-lts-zh-hans.gram   # 应等于 8f1b2d3e...a16ac4
+
+# 2. 写 scheme 级配置 rime_ice.custom.yaml，patch 里加 grammar/language 等键
+# 3. 触发重新部署
+```
+
+**注意：Rime 的「重新部署」没有命令行入口。** `fcitx5-remote -r` 只重载 fcitx 配置、
+`/rime` 的 DBus 接口只有切方案与读状态、停用再激活也不触发部署。
+入口只有一个：**输入法托盘图标 → 右键 → Rime → 重新部署**。
+所以不要先动 `build/` 目录再去研究怎么触发——会把它悬在半路。
+
+内存占用实测（420 MB 模型）：映射进地址空间 400 MB，**实际驻留 RSS 仅 64 KB**，
+随使用按页增长；fcitx5 进程总 RSS 从 117 MB 涨到 174 MB，增量主要来自编译出的索引与
+`build/` 产物，而非模型本身。
+
 ## 实测记录
 
 环境：fcitx5 5.1.22 / KWin 6.7.5 / Wayland

@@ -122,8 +122,20 @@ frequency):
   data. The LTS model `wanxiang-lts-zh-hans.gram` is about 420 MB; download it from that
   project's Releases page
 
-The model file is too large to distribute with this repository, so the links above point
-to the upstream sources, which stay up to date.
+Notes from testing on fcitx5 5.1.22: download the model into the Rime user directory
+(verify the sha256 given on the release page), add the `grammar/language` keys to a
+scheme-level `rime_ice.custom.yaml`, then trigger a redeploy.
+
+**Rime's redeploy has no command-line entry point.** `fcitx5-remote -r` only reloads the
+fcitx configuration, the `/rime` DBus interface only exposes schema switching and state
+queries, and deactivating then reactivating the input method does not trigger it either.
+The only way in is the tray icon: right click, Rime, redeploy. Do not move `build/` away
+before confirming how to trigger the redeploy.
+
+Memory footprint measured with the 420 MB model: 400 MB is mapped into the address space
+but the resident set is only 64 KB, growing page by page with use. The fcitx5 process RSS
+went from 117 MB to 174 MB, most of which is the compiled index and build artifacts
+rather than the model itself.
 
 ## Field notes
 
