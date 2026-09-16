@@ -123,8 +123,31 @@ frequency):
   project's Releases page
 
 Notes from testing on fcitx5 5.1.22: download the model into the Rime user directory
-(verify the sha256 given on the release page), add the `grammar/language` keys to a
-scheme-level `rime_ice.custom.yaml`, then trigger a redeploy.
+(verify the sha256 given on the release page), then write the scheme-level configuration
+below and trigger a redeploy.
+
+The values come from
+[manateelazycat/rime-ice-installer](https://github.com/manateelazycat/rime-ice-installer),
+where they are already validated; `grammar/language` takes the model filename without the
+`.gram` extension:
+
+```yaml
+# ~/.local/share/fcitx5/rime/rime_ice.custom.yaml
+patch:
+  "grammar/language": wanxiang-lts-zh-hans
+  "grammar/collocation_max_length": 7
+  "grammar/collocation_min_length": 2
+  "grammar/collocation_penalty": -10
+  "grammar/non_collocation_penalty": -20
+  "grammar/weak_collocation_penalty": -35
+  "grammar/rear_penalty": -12
+  "translator/contextual_suggestions": false
+  "translator/max_homophones": 5
+  "translator/max_homographs": 5
+```
+
+Note that this goes into a **scheme-level** file (`rime_ice.custom.yaml`), not the global
+`default.custom.yaml`: `grammar/*` and `translator/max_*` are keys of the schema.
 
 **Rime's redeploy has no command-line entry point.** `fcitx5-remote -r` only reloads the
 fcitx configuration, the `/rime` DBus interface only exposes schema switching and state

@@ -112,6 +112,27 @@ install.sh            安装与推送
 
 模型文件体积过大，不适合随本仓库分发，因此仅指向上游；上游保持更新，比固化一份副本更可靠。
 
+第二步的 `rime_ice.custom.yaml` 内容如下（值取自 [manateelazycat/rime-ice-installer](https://github.com/manateelazycat/rime-ice-installer)
+已验证的参数；`grammar/language` 填模型文件名去掉 `.gram` 后缀的部分）：
+
+```yaml
+# ~/.local/share/fcitx5/rime/rime_ice.custom.yaml
+patch:
+  "grammar/language": wanxiang-lts-zh-hans
+  "grammar/collocation_max_length": 7
+  "grammar/collocation_min_length": 2
+  "grammar/collocation_penalty": -10
+  "grammar/non_collocation_penalty": -20
+  "grammar/weak_collocation_penalty": -35
+  "grammar/rear_penalty": -12
+  "translator/contextual_suggestions": false
+  "translator/max_homophones": 5
+  "translator/max_homographs": 5
+```
+
+注意配置文件要挂在**方案级**（`rime_ice.custom.yaml`），不是全局的 `default.custom.yaml` ——
+`grammar/*` 与 `translator/max_*` 都是方案（schema）里的键。
+
 安装要点（实测于 fcitx5 5.1.22）：
 
 ```bash
@@ -120,8 +141,8 @@ cd ~/.local/share/fcitx5/rime
 curl -LO https://github.com/amzxyz/RIME-LMDG/releases/download/LTS/wanxiang-lts-zh-hans.gram
 sha256sum wanxiang-lts-zh-hans.gram   # 应等于 8f1b2d3e...a16ac4
 
-# 2. 写 scheme 级配置 rime_ice.custom.yaml，patch 里加 grammar/language 等键
-# 3. 触发重新部署
+# 2. 写 scheme 级配置（内容见下）
+# 3. 触发重新部署（下一步）
 ```
 
 **注意：Rime 的「重新部署」没有命令行入口。** `fcitx5-remote -r` 只重载 fcitx 配置、
