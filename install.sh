@@ -3,7 +3,7 @@
 set -euo pipefail
 cd "$(dirname "$0")"
 
-NAME=mellow-alpha
+NAME=glass-self
 THEMES="$HOME/.local/share/fcitx5/themes"
 CONF="$HOME/.config/fcitx5/conf/classicui.conf"
 
