@@ -1,4 +1,4 @@
-# fcitx5-saya-theme
+# fcitx5-glass-self
 
 [中文](README.md) | **English**
 
