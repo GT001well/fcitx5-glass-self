@@ -118,17 +118,22 @@ install.sh            安装与推送
 ```yaml
 # ~/.local/share/fcitx5/rime/rime_ice.custom.yaml
 patch:
-  "grammar/language": wanxiang-lts-zh-hans
-  "grammar/collocation_max_length": 7
-  "grammar/collocation_min_length": 2
-  "grammar/collocation_penalty": -10
-  "grammar/non_collocation_penalty": -20
-  "grammar/weak_collocation_penalty": -35
-  "grammar/rear_penalty": -12
-  "translator/contextual_suggestions": false
-  "translator/max_homophones": 5
-  "translator/max_homographs": 5
+  "grammar/language": wanxiang-lts-zh-hans        # 模型文件名去掉 .gram
+  "grammar/collocation_max_length": 7             # 参与搭配打分的词组长度上限
+  "grammar/collocation_min_length": 2             # 下限（整句输入时这两项可忽略）
+  "grammar/collocation_penalty": -10              # 成搭配的权重
+  "grammar/non_collocation_penalty": -20          # 不成搭配的惩罚
+  "grammar/weak_collocation_penalty": -35         # 弱搭配的惩罚
+  "grammar/rear_penalty": -12                     # 出现在句尾时的惩罚
+  "translator/contextual_suggestions": false      # 上下文加权：true 时用刚上屏的文本给候选加分
+  "translator/max_homophones": 5                  # 同一位置取几个同音候选
+  "translator/max_homographs": 5                  # 同一位置取几个同形候选
 ```
+
+上面注释里的语义按 librime 源码核过：`contextual_suggestions` 决定是否调用
+`Poet::ContextualWeighted()` 拿前文与上屏历史给候选加权（即跨句联想），
+与句内的 `grammar/*` 是两套机制；`max_homophones` 对应
+`while (homophones.size() < max_homophones())` 那个循环的上限。
 
 注意配置文件要挂在**方案级**（`rime_ice.custom.yaml`），不是全局的 `default.custom.yaml` ——
 `grammar/*` 与 `translator/max_*` 都是方案（schema）里的键。
@@ -139,7 +144,7 @@ patch:
 # 1. 下载到 Rime 用户目录（上游 release 页给出 sha256，建议校验）
 cd ~/.local/share/fcitx5/rime
 curl -LO https://github.com/amzxyz/RIME-LMDG/releases/download/LTS/wanxiang-lts-zh-hans.gram
-sha256sum wanxiang-lts-zh-hans.gram   # 应等于 8f1b2d3e...a16ac4
+sha256sum wanxiang-lts-zh-hans.gram   # 应等于 8f1b2d3ed2b2755fdd445f6ab103eff613052080b62a0c049f4b166043a16ac4
 
 # 2. 写 scheme 级配置（内容见下）
 # 3. 触发重新部署（下一步）
