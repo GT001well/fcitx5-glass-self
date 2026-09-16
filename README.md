@@ -10,17 +10,19 @@
 3. 背景图片由 SVG 改为 PNG（`panel.png`）：fcitx5 走 cairo 渲染，PNG 的 alpha 通道最稳。
 4. 新增 `blur-mask.svg/png` 并设 `BlurMask=blur-mask.png`：把模糊区域限制成圆角形状。
    留空时 fcitx5 退化成矩形，圆角外面那一圈也会糊。
-5. 撤掉 `[InputPanel/Highlight]` 与 `[Menu/Highlight]` 的 `Image`：fcitx5 的 ThemeImage
-   是「图片和颜色二选一」，有图片时颜色不参与，撤掉才能让强调色生效。
-6. 新增 `[AccentColorField]`，让高亮候选背景跟随系统强调色：
+5. 高亮块的颜色：把 KDE 强调色 `#AD6A5A` 直接烘焙进 `highlight.svg`（原来是灰 `#808080`）。
+   注意这里走过一条弯路并回退了：fcitx5 的 ThemeImage 是**图片和颜色二选一**，曾试过撤掉
+   高亮图片 + `[AccentColorField]=Input Panel Highlight Candidate Background`（配合
+   `UseAccentColor=True`）让颜色跟随系统强调色，实测**高亮块会撑成直角大矩形**，
+   圆角和尺寸一起丢，所以改回图片方案。要换色就重新生成：
 
-   ```ini
-   [AccentColorField]
-   0=Input Panel Highlight Candidate Background
+   ```bash
+   sed -i 's/#AD6A5A/#新色/' theme/highlight.svg && ./build.sh
    ```
 
-   注意值写的是**显示名**（带空格），不是枚举名。配合 `classicui.conf` 的 `UseAccentColor=True`。
-   代价：高亮块失去圆角（纯色背景在 fcitx5 里是直角）。
+   留着备查：`AccentColorField` 的值写的是**显示名**（带空格，如 `Input Panel Highlight
+   Candidate Background`），不是枚举名；它除了改背景色，还会连带把高亮候选的**文字色**
+   改成 accent 的对比色。
 
 ## 安装
 
