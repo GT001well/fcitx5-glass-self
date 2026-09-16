@@ -6,6 +6,12 @@
 - 主题目录名：`mellow-alpha`
 - 显示名：`Mellow Graphite alpha`
 
+## 效果
+
+在 Konsole 中键入拼音时的候选窗（半透明圆角底 + 绿色高亮）：
+
+![候选窗效果](assets/preview.png)
+
 ## 特性
 
 | 特性 | 实现 |
@@ -58,6 +64,8 @@ theme/
   panel.svg/.png      候选窗背景（圆角矩形，半透明）
   highlight.svg/.png  候选高亮块
   blur-mask.svg/.png  模糊区域遮罩
+assets/
+  preview.png         README 用的效果截图
 conf/
   classicui.conf      fcitx5 生成的配置样本，供对照配置项
 build.sh              SVG -> PNG
