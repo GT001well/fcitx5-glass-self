@@ -6,7 +6,8 @@
 ## 相对原主题改了什么
 
 1. `theme.conf` 的 `EnableBlur=True`（原为 False）：在 KWin 下启用候选窗背景模糊。
-2. `panel.svg` 的 `fill-opacity` 1 → 0.6：背景半透明，模糊才看得见。
+2. `panel.svg` 的 `fill-opacity` 1 → 0.4（实测 alpha 约 0.52）：背景半透明，模糊才看得见。
+   实测对照：填 0.3→0.40 / 0.4→0.52 / 0.5→0.63 / 0.6→0.72 / 0.7→0.81（svg 里的投影会抬高 alpha）。
 3. 背景图片由 SVG 改为 PNG（`panel.png`）：fcitx5 走 cairo 渲染，PNG 的 alpha 通道最稳。
 4. 新增 `blur-mask.svg/png` 并设 `BlurMask=blur-mask.png`：把模糊区域限制成圆角形状。
    留空时 fcitx5 退化成矩形，圆角外面那一圈也会糊。
