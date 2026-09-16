@@ -1,10 +1,27 @@
 # fcitx5-saya-theme
 
+**中文** | [English](README.en.md)
+
 一个 Fcitx5 候选窗主题，基于 [sanweiya/fcitx5-mellow-themes](https://github.com/sanweiya/fcitx5-mellow-themes)
 的 `mellow-graphite-dark` 改造，目标是**半透明玻璃质感 + KWin 背景模糊 + 圆角形状**。
 
 - 主题目录名：`mellow-alpha`
 - 显示名：`Mellow Graphite alpha`
+
+## 目录
+
+- [效果](#效果)
+- [特性](#特性)
+- [环境要求](#环境要求)
+- [安装](#安装)
+- [自定义](#自定义)
+  - [透明度](#透明度)
+  - [高亮色](#高亮色)
+- [目录结构](#目录结构)
+- [已知限制](#已知限制)
+- [实测记录](#实测记录)
+- [致谢](#致谢)
+- [许可证](#许可证)
 
 ## 效果
 
