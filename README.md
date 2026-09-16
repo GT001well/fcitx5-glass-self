@@ -24,6 +24,19 @@
    Candidate Background`），不是枚举名；它除了改背景色，还会连带把高亮候选的**文字色**
    改成 accent 的对比色。
 
+## 跟随系统强调色
+
+```bash
+./accent-watch.sh          # 常驻：inotify 事件式监听，KDE 强调色一变就重新生成并推送
+./accent-watch.sh --once   # 立刻同步一次（手动修正用）
+DRY_RUN=1 ./accent-watch.sh  # 只改仓库里的文件，不拷贝、不推送（预览用）
+```
+
+为什么要外挂这一层：fcitx5 自己有 `[AccentColorField]` + `UseAccentColor` 可以跟随系统强调色，
+但那走的是**纯色**路径，高亮块会退化成直角大矩形。要保住圆角就得用图片，而图片的颜色是死的，
+所以由脚本在 KDE 的 `~/.config/kdeglobals` 的 `AccentColor` 变化时重新生成图片。
+没装 inotify-tools 时脚本会自己退回 3 秒轮询。
+
 ## 安装
 
 ```bash
