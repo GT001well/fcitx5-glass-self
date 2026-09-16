@@ -30,16 +30,9 @@
 当前是**固定的绿 `#31a870`**（取自同作者 mellow-wechat 那套配色的高亮色），直接写在 `theme/highlight.svg` 里。
 换色改这个 svg 再 `./build.sh` 即可。
 
-仓库里还留着 `accent-watch.sh`（跟随 KDE 强调色的方案，**当前未启用**）：
-它盯 `~/.config/kdeglobals` 的 `AccentColor`，一变就重新生成高亮并推给 fcitx5。
-之所以不直接用，是因为 fcitx5 自身的 `[AccentColorField]` + `UseAccentColor` 走纯色路径，
-高亮块会退化成直角大矩形，丢圆角。要用的话：
-
-```bash
-./accent-watch.sh          # 常驻（inotify 事件式）
-./accent-watch.sh --once   # 同步一次 —— 注意它会把高亮改回系统强调色
-DRY_RUN=1 ./accent-watch.sh  # 只改仓库文件，不推送
-```
+> 为什么不跟随系统强调色：fcitx5 自带的 `[AccentColorField]` + `UseAccentColor` 走**纯色**渲染，
+> 高亮块会退化成直角大矩形，圆角和尺寸一起丢。要颜色跟随就得放弃圆角，取舍下来选了固定色。
+> （外挂脚本监听 `kdeglobals` 重新生成图片也能做到跟随，评估后没用上。）
 
 ## 安装
 
