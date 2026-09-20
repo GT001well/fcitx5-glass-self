@@ -131,8 +131,8 @@ copy away first so two models are not scanned at once.
 1. `Ctrl+Space` to bring up the input method; `fcitx5-remote -n` shows the current input method name.
 2. Configure groups and schemes with `fcitx5-configtool` (safer than editing
    `~/.config/fcitx5/profile` by hand).
-3. Trigger the Rime redeploy: tray icon, right click, Rime, redeploy (there is no CLI entry
-   point, see Related projects).
+3. Trigger the Rime redeploy: tray icon, right click, Rime, redeploy, or the DBus command
+   (see Related projects).
 4. Install this theme, see "Theme installation".
 
 Measured on this machine (2026-09-16): fcitx5 5.1.22 / fcitx5-rime 5.1.16 / librime 1.17.0 /
@@ -265,11 +265,21 @@ the committed history (cross-sentence association), a separate mechanism from th
 Note that this goes into a **scheme-level** file (`rime_ice.custom.yaml`), not the global
 `default.custom.yaml`: `grammar/*` and `translator/max_*` are keys of the schema.
 
-**Rime's redeploy has no command-line entry point.** `fcitx5-remote -r` only reloads the
-fcitx configuration, the `/rime` DBus interface only exposes schema switching and state
-queries, and deactivating then reactivating the input method does not trigger it either.
-The only way in is the tray icon: right click, Rime, redeploy. Do not move `build/` away
-before confirming how to trigger the redeploy.
+**There are two ways to trigger a Rime redeploy** (measured on fcitx5 5.1.22 / librime 1.17.0):
+the tray icon (right click, Rime, redeploy), or the controller's `SetConfig` directly:
+
+```bash
+gdbus call --session --dest org.fcitx.Fcitx5 --object-path /controller \
+  --method org.fcitx.Fcitx.Controller1.SetConfig "fcitx://config/addon/rime/deploy" "<@a{ss} {}>"
+```
+
+This targets the `deploy` sub-config of the `rime` addon on `/controller`, **not the `/rime`
+interface** (which only exposes `GetCurrentSchema` / `ListAllSchemas` / `IsAsciiMode` /
+`SetSchema` / `SetAsciiMode`). `fcitx5-remote -r` only reloads the fcitx-side configuration
+and does not trigger a deploy, and `"<@a{ss} {}>"` must not be shortened to `"<{}>"`
+(gdbus cannot infer the type of an empty dict). To confirm the deploy really ran, check that
+`last_build_time` in `~/.local/share/fcitx5/rime/user.yaml` changed. Do not move `build/`
+away before confirming how to trigger the redeploy.
 
 Memory footprint measured with the 420 MB model: 400 MB is mapped into the address space
 but the resident set is only 64 KB, growing page by page with use. The fcitx5 process RSS

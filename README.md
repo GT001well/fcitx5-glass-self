@@ -114,7 +114,7 @@ sudo pacman -S rime-wanxiang-pinyin rime-wanxiang-data rime-wanxiang-gram-zh-han
 
 - `Ctrl+Space` 唤出输入法，`fcitx5-remote -n` 看当前输入法名。
 2. 分组与方案用 `fcitx5-configtool` 配（比手改 `~/.config/fcitx5/profile` 稳）。
-3. 触发 Rime 部署：托盘图标 → 右键 → Rime → 重新部署（没有命令行入口，见「相关项目」）。
+3. 触发 Rime 部署：托盘图标 → 右键 → Rime → 重新部署，或走 DBus 命令（见「相关项目」）。
 4. 装本主题：见「主题安装」一节。
 
 本机实测（2026-09-16）：fcitx5 5.1.22 / fcitx5-rime 5.1.16 / librime 1.17.0 /
@@ -232,10 +232,19 @@ sha256sum wanxiang-lts-zh-hans.gram   # 应等于 8f1b2d3ed2b2755fdd445f6ab103ef
 # 3. 触发重新部署（下一步）
 ```
 
-**注意：Rime 的「重新部署」没有命令行入口。** `fcitx5-remote -r` 只重载 fcitx 配置、
-`/rime` 的 DBus 接口只有切方案与读状态、停用再激活也不触发部署。
-入口只有一个：**输入法托盘图标 → 右键 → Rime → 重新部署**。
-所以不要先动 `build/` 目录再去研究怎么触发——会把它悬在半路。
+**触发 Rime 重新部署有两个入口，二选一**（实测于 fcitx5 5.1.22 / librime 1.17.0）：
+输入法托盘图标 → 右键 → Rime → 重新部署，或者直接调 controller 上的 `SetConfig`：
+
+```bash
+gdbus call --session --dest org.fcitx.Fcitx5 --object-path /controller \
+  --method org.fcitx.Fcitx.Controller1.SetConfig "fcitx://config/addon/rime/deploy" "<@a{ss} {}>"
+```
+
+走的是 `rime` 附加组件的 `deploy` 子配置，**不是 `/rime` 接口**（那儿只有
+`GetCurrentSchema` / `ListAllSchemas` / `IsAsciiMode` / `SetSchema` / `SetAsciiMode`）。
+`fcitx5-remote -r` 只重载 fcitx 侧配置，不触发 Rime 部署；`"<@a{ss} {}>"` 也别写成 `"<{}>"`
+（gdbus 推不出空字典的类型）。验证部署真的跑了：`~/.local/share/fcitx5/rime/user.yaml`
+里的 `last_build_time` 会变。动手前先确认触发手段，别先把 `build/` 挪走再去研究怎么部署。
 
 内存占用实测（420 MB 模型）：映射进地址空间 400 MB，**实际驻留 RSS 仅 64 KB**，
 随使用按页增长；fcitx5 进程总 RSS 从 117 MB 涨到 174 MB，增量主要来自编译出的索引与
