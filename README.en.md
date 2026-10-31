@@ -2,6 +2,12 @@
 
 [中文](README.md) | **English**
 
+> [!IMPORTANT]
+> This theme has been superseded by fcitx5-wallcolor-theme. The new repository rewrites wallpaper color sampling, manual color selection and the install script. This repository is kept for historical reference only.
+
+New repository: GT001well/fcitx5-wallcolor-theme
+
+
 An Fcitx5 candidate window theme, derived from
 [sanweiya/fcitx5-mellow-themes](https://github.com/sanweiya/fcitx5-mellow-themes)
 (`mellow-graphite-dark`). The goal is a **translucent glass look with KWin background
