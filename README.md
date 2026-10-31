@@ -3,7 +3,9 @@
 **中文** | [English](README.en.md)
 
 > [!IMPORTANT]
-> 本主题已由 fcitx5-wallcolor-theme 接替，新仓库在壁纸取色、手动选色和安装脚本上都做了重写。本仓库仅作历史记录保留。
+> 本主题已由 fcitx5-wallcolor-theme 接替，新仓库在壁纸取色、手动选色和安装脚本上都做了重写。本仓库仅作历史记录保留
+
+新仓库：GT001well/fcitx5-wallcolor-theme
 
 一个 Fcitx5 候选窗主题，基于 [sanweiya/fcitx5-mellow-themes](https://github.com/sanweiya/fcitx5-mellow-themes)
 的 `mellow-graphite-dark` 改造，目标是**半透明玻璃质感 + KWin 背景模糊 + 圆角形状**。
